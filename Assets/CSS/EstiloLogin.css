@@ -43,7 +43,7 @@ button[type="submit"]{
     color:white; /*Color de texto*/
 }
 button[type="reset"]{
-    background-color:rgb(231, 13, 5);
+    background-color:rgb(224, 73, 68);
     color:white; /*Color de texto*/
 }
 button{
@@ -57,7 +57,7 @@ button{
 }
 input, select { /*Estilo de los campos doonde se ingresa la información*/
     padding: 10px;
-    border: 1px solid #38e432;
+    border: 1px solid #7fd8cc;
     border-radius: 5px;
     font-size:15px;
 } 
