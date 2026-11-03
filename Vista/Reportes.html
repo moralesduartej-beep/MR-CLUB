@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>CLUB ACERIAS - Reportes y Consultas</title>
+    <style>
+        .header-mr {
+            background-color: #c48bf5;
+            padding: 15px 30px;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <div class="header-mr d-flex justify-content-between align-items-center">
+        <h3>CLUB ACERIAS - Consultas y Saldos</h3>
+        <a href="dashboaard.html" class="btn btn-danger btn-sm">
+            <i class="bi bi-box-arrow-right"></i> Volver al Panel
+        </a>
+    </div>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow p-4 border-top border-primary border-4">
+                    <h4 class="text-primary mb-4"><i class="bi bi-bar-chart-line"></i> Consultas de Préstamos y Saldos</h4>
+                    
+                    <form>
+                        <div class="mb-3">
+                            <label for="tipoConsulta" class="form-label">Seleccione el Tipo de Consulta</label>
+                            <select class="form-select" id="tipoConsulta" required>
+                                <option value="">Seleccione una opción...</option>
+                                <option value="asociado">Consultar por Cédula de Asociado</option>
+                                <option value="prestamo">Consultar por Código de Préstamo</option>
+                                <option value="actividad">Consultar Actividades por Municipio</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="criterioBusqueda" class="form-label">Dato a Buscar</label>
+                            <input type="text" class="form-control" id="criterioBusqueda" required placeholder="Ingrese cédula, código o municipio">
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="reset" class="btn btn-secondary">Limpiar</button>
+                            <button type="submit" class="btn btn-primary">Generar Consulta</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
