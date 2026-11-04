@@ -6,7 +6,6 @@
 
 document.getElementById('FormuLogin').addEventListener('submit' , function (e) {
  e.preventDefault();
- 
 
     const usuarioInput = document.getElementById('Email').value;
     const claveInput =document.getElementById('Password').value;
