@@ -1,8 +1,8 @@
-document.addEventListener('DOMCcontentloaded', () =>{
+document.addEventListener('DOMContentLoaded', () =>{
 const loqueado = localStorage.getItem('loqueado');
 
 if (loqueado !== 'true') {
-    Window.location.href = 'login.html';
+    window.location.href = 'login.html';
     return;
 }
 
@@ -20,7 +20,7 @@ if (rol === 'admin') {
 }
 });
 
-function cerrarsesion(){
+function CerrarSesión(){
     localStorage.clear();
-    winddow.location.href = '../vista/login.html';
+    window.location.href = "login.html";
 }
