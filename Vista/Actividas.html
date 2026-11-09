@@ -1,79 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Actividades - CLUB ACERIAS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../Assets/CSS/EstilosTarjetas.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>CLUB ACERIAS - Registro de Actividades</title>
+    <style>
+        .header-mr {
+            background-color: rgb(111, 163, 231);
+            padding: 15px 30px;
+            color: white;
+        }
+    </style>
 </head>
-<body>
 
-    <header class="header-bar">
-        <h1>CLUB ACERIAS - Registro de Actividades</h1>
-        <div class="header-user">
-            <span>Admin MR</span>
-            <a href="dashboaard.html" class="btn-CerrarSesión">
-                <i class="fa-solid fa-right-from-bracket"></i> Volver al Panel
-            </a>
-        </div>
-    </header>
+<body class="bg-light">
 
-    <main class="container">
-        <!-- Crear Actividad/Evento -->
-        <div class="card-panel">
-            <h2><i class="fa-solid fa-calendar-plus"></i> Crear Nueva Actividad / Evento</h2>
-            <form id="formActividad" class="form-grid" style="margin-top: 15px;">
-                <div class="form-group">
-                    <label>Nombre del Evento</label>
-                    <input type="text" placeholder="Ej. Asamblea General" required>
-                </div>
-                <div class="form-group">
-                    <label>Tipo de Evento</label>
-                    <select>
-                        <option>Reunión</option>
-                        <option>Evento Deportivo</option>
-                        <option>Programa Social</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Fecha y Hora</label>
-                    <input type="datetime-local" required>
-                </div>
-                <div class="form-group">
-                    <label>Lugar</label>
-                    <input type="text" placeholder="Ej. Salón Principal">
-                </div>
-                <div class="form-group" style="grid-column: 1 / -1;">
-                    <button type="submit" class="btn-primary" style="width: max-content;">Registrar Evento</button>
-                </div>
-            </form>
-        </div>
+    <!-- Encabezado de la página -->
+    <div class="header-mr d-flex justify-content-between align-items-center">
+        <h3>CLUB ACERIAS - Registro de Actividades</h3>
+        <a href="dashboaard.html" class="btn btn-light btn-sm text-primary fw-bold">
+            <i class="bi bi-arrow-left"></i> Volver al Panel
+        </a>
+    </div>
 
-        <!-- Participación de Asociados -->
-        <div class="card-panel">
-            <h2><i class="fa-solid fa-clipboard-user"></i> Control de Participación</h2>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Evento</th>
-                        <th>Tipo</th>
-                        <th>Fecha</th>
-                        <th>Asistentes Registrados</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Torneo de Integración</td>
-                        <td>Evento Deportivo</td>
-                        <td>15/11/2026</td>
-                        <td>42 asociados</td>
-                        <td><button class="btn-primary" style="padding: 4px 8px; font-size: 0.8rem;">Tomar Asistencia</button></td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow p-4 border-top border-primary border-4">
+                    <h4 class="text-primary mb-4">
+                        <i class="bi bi-calendar-event"></i> Registrar Nueva Actividad
+                    </h4>
+                    
+                    <!-- Formulario con ID para el script JS -->
+                    <form id="formActividad">
+                        <div class="mb-3">
+                            <label for="nombreActividad" class="form-label font-weight-bold">Nombre de la Actividad / Evento</label>
+                            <input type="text" class="form-control" id="nombreActividad" required placeholder="Ej. Asamblea General, Torneo Deportivo">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fechaActividad" class="form-label">Fecha del Evento</label>
+                                <input type="date" class="form-control" id="fechaActividad" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lugarActividad" class="form-label">Lugar / Sede</label>
+                                <input type="text" class="form-control" id="lugarActividad" required placeholder="Ej. Salón Principal, Cancas">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descripcionActividad" class="form-label">Descripción u Observaciones</label>
+                            <textarea class="form-control" id="descripcionActividad" rows="3" placeholder="Detalles sobre el evento o la participación de los asociados..."></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="reset" class="btn btn-secondary">Limpiar</button>
+                            <button type="submit" class="btn btn-primary">Guardar Actividad</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
+
+    <!-- Carga del controlador JavaScript al final del cuerpo -->
+    <script src="../Controller/Actividades.js"></script>
 </body>
-<script src="../Controller/Actividas.js"></script>
+
 </html>
