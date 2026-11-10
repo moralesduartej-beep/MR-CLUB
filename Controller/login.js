@@ -1,64 +1,38 @@
-
-// LISTA TEMPORAL DE USUARIOS PARA PROBAR EL INICIO DE SESION
-
-const Usuarios = [
-
-    {
-        usuario: 'admin@gmail.com',
-        clave: '123',
-        rol: 'admin',
-        nombre: 'admin MR'
-    },
-
-    {
-        usuario: 'pepito@gmail.com',
-        clave: '123',
-        rol: 'asociados',
-        nombre: 'Juan Perez'
-    }
-
-];
-
-
-// CAPTURAR EL FORMULARIO
-document.getElementById('FormuLogin').addEventListener('submit', function(e) {
-
+const FormuLogin = document.getElementById("FormuLogin");
+FormuLogin.addEventListener("submit" , async function (e) {
     e.preventDefault();
 
-    // OBTENER LOS DATOS INGRESADOS
-    const usuarioInput = document.getElementById('Email').value.trim().toLowerCase();
+    const   boton = formulario.getElementById("btnLogin");
+    const  mensaje = formulario.getElementById("mensajeLogin");
 
-    const claveInput = document.getElementById('Password').value;
+    boton.disabled = true;
 
-    // BUSCAR EL USUARIO
-    const usuarioEncontrado = Usuarios.find(
-        u => u.usuario === usuarioInput && u.clave === claveInput
-    );
+    try {
+        const respuesta = await fetch(formulario.action, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(object.fromEntries(new FormData(formulario).entries()),
+        ),
+    });
 
+    const resultado = await respuesta.json();
 
-    // VALIDAR INICIO DE SESION
-    if (usuarioEncontrado) {
+    if (respuesta.success) {
+        mensaje.textContent = "no fue posible iniciar sesión .por favor, verifica tus credenciales.";
+        boton.disabled = false;
+        return;
+        }
 
-        // GUARDAR DATOS DEL USUARIO
-        localStorage.setItem('logueado', 'true');
+         localStorage.setItem('Logueado', 'true');
+        localStorage.setItem('Rol', resultado.Rol);
+        localStorage.setItem('Nombre', resultado.Nombre);
 
-        localStorage.setItem('rol', usuarioEncontrado.rol);
-
-        localStorage.setItem('Nombre', usuarioEncontrado.nombre);
-
-        localStorage.setItem('Usuario', usuarioEncontrado.usuario);
-
-        alert('Bienvenido ' + usuarioEncontrado.nombre);
-
-        // ENTRAR AL DASHBOARD
-        window.location.href = 'dashboard.html';
-
+        window.location.href = "dashboaard.html";
+    }catch (error) {
+        console.error("Error al iniciar sesión:", error);
+        mensaje.textContent = 
+        "ocurrio un error al intentar iniciar sesión. por favor, intenta nuevamente.";
+    } finally {
+        boton.disabled = false;
     }
-
-    else {
-
-        alert('Usuario o contraseña incorrectos');
-
-    }
-
 });

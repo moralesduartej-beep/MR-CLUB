@@ -1,55 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>CLUB ADSO</title>
+         <link rel="stylesheet" href="../assets/CSS/EstiloLogin.css">
+    </head>
 
-    <title>CLUB ADSO</title>
+    <body>
+        <div class="Container-Login">
+            <h2>Iniciar Sesión Accerías</h2>
 
-    <link rel="stylesheet" href="../Assets/CSS/Estiloformulario.css">
-</head>
+            <form id="FormuLogin" action="../Modelo/iniciarSeción.php" method="POST">
+                <div class="grupo-input">
+                    <label for="Email">Correo Electrónico: </label>
+                    <input type="email" id="Email" required placeholder="Ingresa Tu Correo Electrónico">
+                </div>
 
-<body>
+                <div class="grupo-input">
+                    <label for="Password">Contraseña: </label>
+                    <input type="password" id="Password" required placeholder="Ingresa Tu Contraseña">
+                </div>
+                <div class="grupo-botones">
+                    <button type="submit">Ingresar</button>
+                    <button type="reset" class="btn-secundario">cancelar</button>
+                </div>
 
-    <div class="Container-Login">
-
-        <h2>Iniciar Sesión Accerías</h2>
-
-        <form id="FormuLogin">
-
-            <div class="grupo-input">
-                <label for="Email">Correo Electrónico:</label>
-                <input
-                    type="email"
-                    id="Email"
-                    required
-                    placeholder="Ingresa Tu Correo Electrónico">
-            </div>
-
-            <div class="grupo-input">
-                <label for="Password">Contraseña:</label>
-                <input
-                    type="password"
-                    id="Password"
-                    required
-                    placeholder="Ingresa Tu Contraseña">
-            </div>
-
-            <div class="grupo-botones">
-                <button type="submit">Ingresar</button>
-                <button type="reset" class="btn-secundario">Cancelar</button>
-            </div>
-
-            <p class="texto-link">
-                ¿No tienes una cuenta?
-                <a href="Registro.html">Regístrate aquí</a>
-            </p>
-
-        </form>
-
-    </div>
-
-<script src="../Controller/login.js"></script>
-
-</body>
+                <p class="texto-link">
+                    ¿No tienes una cuenta? <a href="Registro.html">Regístrate aquí</a>
+                </p>
+            </form>
+        </div>
+        <p id="mensajeLogin" class="text-danger mt-3 mb-0"  role = "alert"></p>
+    </body>
+    <script src="../Controlador/Login.js"></script>
 </html>

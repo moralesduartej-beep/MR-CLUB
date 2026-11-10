@@ -1,59 +1,56 @@
 <?php
-header("Content-Type: application/json; charset-utf-8");
-require __DIR__ . '../Modelo/Asociados.php';
+header("Content-Type: application/json; charset=utf-8");
+require_once __DIR__ . '/Asociados.php';
 
 try {
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
         http_response_code(405);
-
-        /*Saltar a catch y mostrar el mensaje de error en foemato JSON*/
         throw new Exception("Método HTTP no permitido");
     }
-    /*Leer el contenido JSON del cuerpo de la solicitud*/
+
     $json = file_get_contents("php://input");
+    $datos = json_decode($json, true);
 
-    /*Decodificar el JSON en un arreglo asociativo*/
-    $datos= json_decode($json, true);
-
-    /*Validar que los datos requeridos esten presentes*/
-    if(!is_array($datos) || json_last_error() !== JSON_ERROR_NONE) {
+    if (!is_array($datos) || json_last_error() !== JSON_ERROR_NONE) {
         http_response_code(400);
-        throw new Exception("Datos inválidos");
+        throw new Exception("Datos JSON inválidos");
     }
 
-    /*Crear una intancia de la clase Asociados y guardar los datos en la base de datos*/
-    $campos=['documento','Nombres','Apellidos','FechaNacimiento','DirecciónDeResidencia','Ciudad','Telefono','Email','genero']
-    foreach($campos as $campo) {
-        if (!isset($datos[$campo])) {
+    /* Validar los campos requeridos recibidos desde el HTML */
+    $campos = ['Documento', 'Nombres', 'Apellidos', 'FechaNacimiento', 'direccionResidencia', 'Ciudad', 'Telefono', 'Email', 'Genero', 'Contraseña'];
+    
+    foreach ($campos as $campo) {
+        if (!isset($datos[$campo]) || trim($datos[$campo]) === '') {
             http_response_code(400);
-            throw new Exception("Falta el campo requerido:" . $campo);
+            throw new Exception("Falta el campo requerido: " . $campo);
         }
     }
+
     if (!filter_var($datos['Email'], FILTER_VALIDATE_EMAIL)) {
         http_response_code(400);
         throw new Exception("Formato de email inválido");
     }
 
     $asociado = new Asociados($datos);
-    $resultado =$asociado->guardar();
+    $resultado = $asociado->guardar();
     
     if ($resultado) {
         http_response_code(201);
-        echo json_encode(["success" => true, "mensaje" => "Asociado guardado correctamnente"]);
-
-
-        
-    }else{
+        echo json_encode(["success" => true, "mensaje" => "Asociado guardado correctamente"]);
+    } else {
         http_response_code(500);
-        echo json_encode(["success" => false, "mensaje" => "Error al guardar el asociado"]);
+        echo json_encode(["success" => false, "mensaje" => "Error al guardar el asociado en BD"]);
     }
-}catch (PDDException){
-    if($e->getcode(500) === 23000){  /*Codigo de error para datos duplicaddos en MySQL*/
-        http_response_code(400);
-        echo json_encode(["success" => false, "mensaje" => "El documento ya esta registrado"]);
+
+} catch (PDOException $e) {
+    if ($e->getCode() == '23000') {
+        http_response_code(309);
+        echo json_encode(["success" => false, "mensaje" => "El documento o correo ya se encuentra registrado"]);
+    } else {
+        http_response_code(500);
+        echo json_encode(["success" => false, "mensaje" => "Error de BD: " . $e->getMessage()]);
     }
-    
-/*Exepcion error de codigo por ejemplo metodo HTTP,datos invalidos*/
-}catch (Exception $e){
-   echo json_encode(["success" => false, "mensaje" => $e->getMessage()]);
+} catch (Exception $e) {
+    echo json_encode(["success" => false, "mensaje" => $e->getMessage()]);
 }
+?>
