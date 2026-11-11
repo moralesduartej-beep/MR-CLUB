@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json; charset=utf-8");
-require_once __DIR__ . '/Asociados.php';
+require_once __DIR__ . '/../Modelo/Asociados.php';
 
 try {
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -16,8 +16,8 @@ try {
         throw new Exception("Datos JSON inválidos");
     }
 
-    /* Validar los campos requeridos recibidos desde el HTML */
-    $campos = ['Documento', 'Nombres', 'Apellidos', 'FechaNacimiento', 'direccionResidencia', 'Ciudad', 'Telefono', 'Email', 'Genero', 'Contraseña'];
+    /* Validar los campos requeridos recibidos en minúsculas desde el cliente */
+    $campos = ['documento', 'nombres', 'apellidos', 'fechaNacimiento', 'direccionResidencia', 'ciudad', 'telefono', 'email', 'genero', 'Contraseña'];
     
     foreach ($campos as $campo) {
         if (!isset($datos[$campo]) || trim($datos[$campo]) === '') {
@@ -26,7 +26,7 @@ try {
         }
     }
 
-    if (!filter_var($datos['Email'], FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
         http_response_code(400);
         throw new Exception("Formato de email inválido");
     }
@@ -44,7 +44,7 @@ try {
 
 } catch (PDOException $e) {
     if ($e->getCode() == '23000') {
-        http_response_code(309);
+        http_response_code(409); // Corregido código de conflicto
         echo json_encode(["success" => false, "mensaje" => "El documento o correo ya se encuentra registrado"]);
     } else {
         http_response_code(500);
@@ -53,4 +53,3 @@ try {
 } catch (Exception $e) {
     echo json_encode(["success" => false, "mensaje" => $e->getMessage()]);
 }
-?>

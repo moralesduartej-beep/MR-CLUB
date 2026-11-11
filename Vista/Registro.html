@@ -9,30 +9,30 @@
      <div class="Contenedor-Formulario">
         <h2>Registro de Asociado - Acerias</h2>
 
-        <form id="formAsociado" action="../Modelo/GuardarAsociado.php" method="POST">
+        <form id="formAsociado" action="../Modelo/GuardarAsociados.php" method="POST">
             <div class="grupo-input">
                 <label>Ingresar Documento: </label>
-                <input id="Documento" name="Documento" type="number" placeholder="ejemplo:1054869578">
+                <input id="documento" name="documento" type="number" placeholder="ejemplo:1054869578">
             </div>
             <div class="grupo-input">
                 <label>Ingresar Nombres: </label>
-                <input type="text" id="Nombres" name="Nombres" required placeholder="Ingrese nombre completos">
+                <input type="text" id="nombres" name="nombres" required placeholder="Ingrese nombre completos">
             </div>
             <div class="grupo-input">
                  <label>Ingresar Apellidos: </label>
-                <input type="text" id="Apellidos" name="Apellidos" required placeholder="Ingrese apellidos completos">
+                <input type="text" id="apellidos" name="apellidos" required placeholder="Ingrese apellidos completos">
             </div>
             <div class="grupo-input">
                 <label>Ingrese su fecha de nacimiento:</label>
-                <input type="date" id="FechaNacimiento" name="FechaNacimiento" required placeholder="ejemplo: 19/09/2008">
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required placeholder="ejemplo: 19/09/2008">
             </div>
             <div class="grupo-input">
                 <label>Dirección De Residencia: </label>
-                <input type="text" id="DirecciónDeResidencia" name="DirecciónDeResidencia" required placeholder="ejemplo: Calle 12 # 6-49">
+                <input type="text" id="direccionResidencia" name="direccionResidencia" required placeholder="ejemplo: Calle 12 # 6-49">
             </div>
             <div class="grupo-input">
                 <label>Ciudad: </label>
-                <Select id="Ciudad" name="Ciudad" required>
+                <Select id="ciudad" name="ciudad" required>
                     <option value="Sogamoso">Sogamoso</option>
                     <option value="Duitama">Duitama</option>
                     <option value="Tunja">Tunja</option>
@@ -40,11 +40,11 @@
             </div>
             <div class="grupo-input">
                 <label>Telefono: </label>
-                <input type="number" id="Telefono" name="Telefono" required placeholder="ejemplo: 3125847896">
+                <input type="number" id="telefono" name="telefono" required placeholder="ejemplo: 3125847896">
             </div>
             <div class="grupo-input">
                 <label>Email: </label>
-                <input type="text" id="Email" name="Email" required placeholder="ejemplo: valeria@gmail.com">
+                <input type="text" id="email" name="email" required placeholder="ejemplo: valeria@gmail.com">
             </div>
             <div class="grupo-input">
                 <label> Contraseña: </label>
@@ -57,15 +57,15 @@
             <div class="grupo-input">
                 <label>Genero: </label>
                 <label>
-                      <input type="radio" id="Femenino" name="Genero" value="Femenino">
+                      <input type="radio" id="Femenino" name="genero" value="Femenino">
                       <span>FEMENINO</span>
                 </label>
                 <label>
-                      <input type="radio" id="Masculino" name="Genero" value="Masculino">
+                      <input type="radio" id="Masculino" name="genero" value="Masculino">
                       <span>MASCULINO</span>
                 </label>
                 <label>
-                      <input type="radio" id="Otro" name="Genero" value="Otro">
+                      <input type="radio" id="Otro" name="genero" value="Otro">
                       <span>OTRO</span>
                 </label>
             </div>

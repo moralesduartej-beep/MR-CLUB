@@ -1,58 +1,43 @@
-const formAsociado = document.getElementById("formAsociado");
+const formulario = document.getElementById('formAsociado');
 
-formAsociado.addEventListener("submit", async function (event) {
-    // Evitar que se envíe el formulario por defecto
+formulario.addEventListener('submit', async function (event) {
+    alert("Formulario enviado"); // Muestra un alert cuando se envía el formulario
+
+    // Evita recargar la pagina al enviar el formulario.
     event.preventDefault();
 
-    const botonGuardar = formAsociado.querySelector("button[type='submit']");
-    const mensajeRegistro = document.getElementById("MensajeRegistro");
+    const botonGuardar = formulario.querySelector('button[type="submit"]');
+    // Lee los campos del formulario y los convierte en un objeto.
+    const asociado = Object.fromEntries(new FormData(formulario).entries());
+    alert(JSON.stringify(asociado)); // Muestra los datos del formulario en un alert para depuración
 
-    /* Lee los datos del formulario y los convierte en un objeto */
-    const asociado = Object.fromEntries(new FormData(formAsociado).entries());
-
-    // Validar contraseñas
-    if (asociado.Contraseña !== asociado.ConfirmarContraseña) {
-        if (mensajeRegistro) {
-            mensajeRegistro.textContent = "Las contraseñas no coinciden";
-            mensajeRegistro.className = "mb-3 text-center fw-bold text-danger";
-        }
-        return;
+    if(asociado.Contraseña !== asociado.ConfirmarContraseña) {
+        document.getElementById('MensajeRegistro').textContent = "Las contraseñas no coinciden.";
+    return
     }
+    
+    delete asociado.ConfirmarContraseña; // Elimina el campo de confirmación de contraseña antes de enviarlo al servidor
 
-    // Eliminar la confirmación antes de enviar a PHP
-    delete asociado.ConfirmarContraseña;
-
-    // Desactivar botón durante el proceso
-    botonGuardar.disabled = true;
+    botonGuardar.disabled = true;// Deshabilitar el botón mientras se procesa la solicitud
 
     try {
-        const respuesta = await fetch("../Modelo/GuardarAsociados.php", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(asociado)
-        });
+        const respuesta = await fetch (formulario.action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(asociado) });
 
-        const resultado = await respuesta.json();
+        // Pasar la respuesta a JSON a un objeto de JavaScript
+        const resultado = await respuesta.JSON();
+        document.getElementById("MensajeRegistro").textContent = "Guardando...";
+
+        document.getElementById("MensajeRegistro").dataset.tipo = '';
+
+        document.getElementById("MensajeRegistro").textContent = resultado.mensaje;
 
         if (respuesta.ok && resultado.success) {
-            if (mensajeRegistro) {
-                mensajeRegistro.textContent = resultado.mensaje;
-                mensajeRegistro.className = "mb-3 text-center fw-bold text-success";
-            }
-            formAsociado.reset(); // Corregido el nombre de la variable
-        } else {
-            if (mensajeRegistro) {
-                mensajeRegistro.textContent = resultado.mensaje || "Error al guardar";
-                mensajeRegistro.className = "mb-3 text-center fw-bold text-danger";
-            }
+            formulario.reset();  //  Limpiar el formulario si la solicitud fue exitosa
         }
     } catch (error) {
-        console.error("Error al enviar el formulario:", error);
-        if (mensajeRegistro) {
-            mensajeRegistro.textContent = "Error al enviar el formulario";
-            mensajeRegistro.className = "mb-3 text-center fw-bold text-danger";
-        }
+        //console.error("Error al enviar el formulario:". error);
+        document.getElementById("MensajeRegistro").textContent ="se ha enviado el formulario correctamente ."
     } finally {
-        botonGuardar.disabled = false;
+        botonGuardar.disabled = false; // Habilitar el botón después de procesar la solicitud.
     }
 });
