@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // CERRAR SESION
-function CerrarSesion() {
+   async function CerrarSesion() {
     try {
     const respuesta = await  fetch("../Modelo/cerrarSesion.php", {
     method: "POST",
@@ -72,7 +72,7 @@ function CerrarSesion() {
         throw new error("error al cerrar sesion");
      }
         localStorage.clear();
-        window.location.href = "../Vista/login.html";
+        window.location.href = 'login.html';
     }catch (error) {
         console.error("error al cerrr sesion:,error ")
     }

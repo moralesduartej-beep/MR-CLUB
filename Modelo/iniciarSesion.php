@@ -18,7 +18,7 @@ try {
     }
 
     $email = $datos['email'] ?? "";
-    $contraseña = $datos['Contraseña'] ?? "";
+    $contraseña = $datos['password'] ?? "";
 
     if (!is_string($email) || !is_string($contrasena) || $email === "" || $contrasena === "") {
         http_response_code(400);
