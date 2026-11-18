@@ -9,9 +9,9 @@ formulario.addEventListener("submit", async function (e) {
         const respuesta = await fetch (formulario.action, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify
-            (Object.fromEntries(new FormData(formulario).entries()),//convertir los datos del formularioen un objeto y luego a JSON
-        )
+            body: JSON.stringify(
+                Object.fromEntries(new FormData(formulario).entries()) //convertir los datos del formulario en un objeto y luego a JSON
+            )
         });
         const resultado = await respuesta.json();
         if(!resultado.success){ /*!Signo para negar*/
@@ -22,7 +22,7 @@ formulario.addEventListener("submit", async function (e) {
         localStorage.setItem("Logueado", "true");
         localStorage.setItem("rol", resultado.rol);
         localStorage.setItem("nombre", resultado.nombre);
-        window.location.href = 'dashboaard.html';//redirigir al usuario a la la pagina del dashboaard si la respuesta es exitosa 
+        window.location.href = 'dashboaard.html'; //redirigir al usuario a la pagina del dashboaard si la respuesta es exitosa 
 
     }catch (error){
         console.error("Error al iniciar sesión:", error);
