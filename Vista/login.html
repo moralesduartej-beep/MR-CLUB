@@ -14,7 +14,7 @@
             <form id="FormuLogin" action="../Modelo/iniciarSesion.php" method="POST">
                 <div class="grupo-input">
                     <label for="Email">Correo Electrónico: </label>
-                    <input type="email" id="Email" name="email" placeholder="Ingresa Tu Correo Electrónico">
+                    <input type="email" id="Email" name="email" required placeholder="Ingresa Tu Correo Electrónico">
                 </div>
 
                 <div class="grupo-input">
@@ -31,6 +31,6 @@
                 <p id="mensajelogin" class="text-danger mt-3 mb-0" role="alert"></p>
             </form>
         </div>
-        <script src="../Controller/login.js"></script>
     </body>
+    <script src="../Controller/login.js"></script>
 </html>

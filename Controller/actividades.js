@@ -1,7 +1,9 @@
 const formActividad = document.getElementById("formActividad");
 let Administrador = false;
 let Actividades = [];
-
+let accionesConfiguradas =false;
+const formularioActividad=document.getElementById("formActividad");
+const modalActividad=new bootstrap.modal(modalActividad)
 async function solicitarApi(metodo, datos) {
     const opciones = {
         method: metodo,
@@ -27,7 +29,7 @@ async function carrgarActividad() {
         const resultado = await solicitarApi("GET");
         Administrador = resultado.rol === "admin";
 
-        configurarAccionnes();
+        configurarAcciones();
         Actividades = resultado.Actividades;
         mostrarActiviades();
 
@@ -73,7 +75,8 @@ function mostrarActiviades() {
             botonEliminar.type = "button";
             botonEliminar.className = " btn btn-sm btn-outline-primary me-2";
             botonEliminar.innerHTML = '<i class="bi bi-trash"></i>';
-            botonEliminar.addEventListener("click", () => eliminarActividad(Actividades));
+            botonEliminar.addEventListener("click", () => 
+           eliminarActividad(Actividades));
 
             Acciones.append(botonEditar, botonEliminar); //Apent que agregue en esa fila la celda de esos dos botones
             fila.append(Acciones); //Que en la fila agrege los botones
@@ -88,4 +91,77 @@ function crearCelda(texto) {
     celda.textContent = texto;
     return celda;
 }
+
+async function eliminarActividad(actividad) {
+    const confirmar= window.confirm(`¿deseas eliminar la actividad "${actividad.nombreActividad}"?`,);
+
+     if(!confirmar){
+        return
+     }
+
+     try{
+        await solicitarApi("DELETE", {idActividad:actividad.idActividad});
+        await carrgarActividad();
+        alert("actividad eliminada corectamente");
+     }catch (error) {
+        alert(error.message);
+     }
+}
+
+function configurarAcciones(){
+    if(accionesConfiguradas){
+        return;
+    }
+    const botonNueva = document.getElementById("nuevaActividad");
+    const encabezadoAcciones = document.getElementById("encabezadoAcciones ");
+
+    if(esAdministrador){
+        botonNueva.classList.remove("d-none");
+        encabezadoAcciones.classList.remove("d-none");
+        accionesConfiguradas = true;
+        return;
+    }
+
+}
+
+function abrirEdicion(actividad){
+    formularioActividad.reset();
+    document.getElementById("idActividad").value=actividad.idActividad;
+    document.getElementById("nombreActividad").value=actividad.nombreActividad;
+    document.getElementById("fechaevento").value=actividad.fechaEvento;
+    decument.getElementById("municipio").value=actividad.munucipio;
+    decument.getElementById("totalRecaudado").value=actividad.totalRecaudado ??"";
+
+    document.getElementById("campototalrecaudo").classList.remove("d-none");
+    document.getElementById("titulomodalActividad").textContent = "editar actividad";
+    document.getElementById("guardarActividad").textContent = "guardar cambios";
+    modalActividad.show();
+}
+
+formularioActividad.addEventListener("submit", async (evento) =>  {
+  evento.preventDefault();
+  const idActividad=document.getElementById("idActividad").value;
+
+  const datos ={
+    nombreActividad:document.getElementById("nombreActividad").value.trim(),
+    fechaEvento:document.getElementById("fechaevento").value,
+    municipio:document.getElementById("municipio").value.trim(),
+  }
+
+  if(idActividad){
+    datos.idActividad = Number(idActividad);
+    const total =document.getElementById("totalRecaudo").value;
+    datos.totalRecaudado =total==="" ? null  : Number(total);
+  }
+
+  try{
+    await solicitarApi (idActividad ? "PUT" : "POST" ,datos);
+    modalActividad.hide();
+    alert("actualiza correctamente");
+    carrgarActividad();
+    
+  }catch (error){
+    alert(error.message);
+  }
+  });
 carrgarActividad();

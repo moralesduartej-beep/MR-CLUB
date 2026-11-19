@@ -43,7 +43,7 @@ try {
     }
 
 } catch (PDOException $e) {
-    if ($e->getCode() == '23000') {
+    if($e->getCode() == '23000') {
         http_response_code(409); // Corregido código de conflicto
         echo json_encode(["success" => false, "mensaje" => "El documento o correo ya se encuentra registrado"]);
     } else {
